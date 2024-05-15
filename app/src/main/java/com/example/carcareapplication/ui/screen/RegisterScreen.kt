@@ -1,8 +1,11 @@
 package com.example.carcareapplication.ui.screen
 
+import android.util.Patterns
+import android.util.Patterns.EMAIL_ADDRESS
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,26 +20,63 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.carcareapplication.R
+import com.example.carcareapplication.ui.theme.poppinsFontFamily
 
 @Composable
 fun RegisterScreen() {
+
+    var firstName by remember {
+        mutableStateOf("")
+    }
+    var lastName by remember {
+        mutableStateOf("")
+    }
+    var email by remember {
+        mutableStateOf("")
+    }
+    var checkEmail by remember {
+        mutableStateOf(true)
+    }
+    var password by remember {
+        mutableStateOf("")
+    }
+    var repeatPassword by remember {
+        mutableStateOf("")
+    }
+    var showPassword by remember {
+        mutableStateOf(false)
+    }
+    var checkPassword by remember {
+        mutableStateOf(true)
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -50,9 +90,11 @@ fun RegisterScreen() {
             //.background(color = Color.Cyan), // Added padding to the top and bottom
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-
-            Text(text = "Register", fontSize = 32.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
+            Text(text = "Register", fontSize = 32.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Left,
+                modifier = Modifier.fillMaxWidth())
 
             Spacer(Modifier.height(30.dp))
 
@@ -61,9 +103,10 @@ fun RegisterScreen() {
                     .fillMaxWidth()
             ) {
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = firstName,
+                    onValueChange = { firstName = it},
                     label = { Text(text = "First name")},
+                    enabled = true,
                     placeholder = { Text(text = "John")},
                     isError = false,
                     modifier = Modifier
@@ -75,8 +118,9 @@ fun RegisterScreen() {
                 Spacer(modifier = Modifier.width(10.dp))
 
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = lastName,
+                    onValueChange = { lastName = it},
+                    enabled = true,
                     label = { Text(text = "Last name")},
                     placeholder = { Text(text = "Doe")},
                     isError = false,
@@ -89,11 +133,12 @@ fun RegisterScreen() {
             Spacer(modifier = Modifier.height(20.dp))
 
             TextField(
-                value = "" ,
-                onValueChange = {},
+                value = email ,
+                onValueChange = { email = it},
+                enabled = true,
                 label = { Text(text = "Email")},
                 placeholder = { Text(text = "example@example.com")},
-                isError = false,
+                isError = !checkEmail,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -101,10 +146,30 @@ fun RegisterScreen() {
             Spacer(Modifier.height(20.dp))
 
             TextField(
-                value = "" ,
-                onValueChange = {},
+                value = password ,
+                onValueChange = { password = it },
+                enabled = true,
                 label = { Text(text = "Password")},
-                isError = false,
+                visualTransformation = if(showPassword) {
+                    VisualTransformation.None
+                }else{
+                     PasswordVisualTransformation()
+                     },
+                isError = !checkPassword,
+                trailingIcon = {  Icon(
+                    painter = if(showPassword){
+                        painterResource(id = R.drawable.eye)
+                    }
+                    else{
+                        painterResource(id = R.drawable.eye_crossed)
+                    },
+                    contentDescription = "",
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable(onClick = { showPassword = !showPassword }) )
+
+                },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -112,18 +177,24 @@ fun RegisterScreen() {
             Spacer(Modifier.height(20.dp))
 
             TextField(
-                value = "" ,
-                onValueChange = {},
+                value = repeatPassword,
+                onValueChange = { repeatPassword = it },
+                enabled = true,
                 label = { Text(text = "Repeat password")},
-                isError = false,
+                visualTransformation = PasswordVisualTransformation(),
+                isError = !checkPassword,
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done)
             )
 
             Spacer(Modifier.height(60.dp))
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { checkEmail = checkEmailForRegister(email);
+                            checkPassword = password == repeatPassword; },
                 modifier = Modifier
                     .fillMaxWidth(),
                 //.padding(horizontal = 32.dp, vertical = 16.dp),
@@ -140,7 +211,7 @@ fun RegisterScreen() {
             Spacer(Modifier.height(30.dp))
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {},
                 modifier = Modifier
                     .fillMaxWidth(),
                 //.padding(horizontal = 32.dp, vertical = 16.dp),
@@ -158,7 +229,9 @@ fun RegisterScreen() {
         }
     }
 }
-
+fun checkEmailForRegister(email: String): Boolean{
+    return  EMAIL_ADDRESS.matcher(email).matches()
+}
 
 @Composable
 @Preview(showBackground = true)

@@ -21,6 +21,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +39,14 @@ import com.example.carcareapplication.R
 
 @Composable
 fun AddCarScreen() {
+    // stavit cemo da su sva polja obavezna
+    var model by remember { mutableStateOf("") }
+    var year by remember { mutableStateOf("") }
+    var engine by remember { mutableStateOf("") }
+    var fuel by remember { mutableStateOf("") }
+
+    var showError by remember { mutableStateOf(false) } // po defaultu nijedno polje ne prikazuje error
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -55,11 +67,12 @@ fun AddCarScreen() {
             Spacer(Modifier.height(30.dp))
 
             TextField(
-                value = "" ,
-                onValueChange = {},
+                value = model ,
+                onValueChange = { model = it},
+                enabled = true,
                 label = { Text(text = "Make and Model")},
                 placeholder = { Text(text = "Audi S7")},
-                isError = false,
+                isError = showError && model.isEmpty(), // ako je error true i ako je polje prazno, eror je true ako je nakon unosa polje ostalo prazno, namjerno sam ostavio i uslov ovdje da je model.isEmpty(), moze i bez toga ovdje
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -67,11 +80,12 @@ fun AddCarScreen() {
             Spacer(Modifier.height(30.dp))
 
             TextField(
-                value = "" ,
-                onValueChange = {},
+                value = year ,
+                onValueChange = { year = it },
+                enabled = true,
                 label = { Text(text = "Production year")},
                 placeholder = { Text(text = "2013")},
-                isError = false,
+                isError = showError && year.isEmpty(),
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -79,11 +93,11 @@ fun AddCarScreen() {
             Spacer(Modifier.height(30.dp))
 
             TextField(
-                value = "" ,
-                onValueChange = {},
+                value = engine ,
+                onValueChange = { engine = it },
                 label = { Text(text = "Engine")},
                 placeholder = { Text(text = "4.2 TFSI")},
-                isError = false,
+                isError = showError && engine.isEmpty(),
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -91,11 +105,11 @@ fun AddCarScreen() {
             Spacer(Modifier.height(30.dp))
 
             TextField(
-                value = "" ,
-                onValueChange = {},
+                value = fuel ,
+                onValueChange = { fuel = it },
                 label = { Text(text = "Fuel type")},
                 placeholder = { Text(text = "Petrol")},
-                isError = false,
+                isError = showError && fuel.isEmpty(),
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -103,7 +117,9 @@ fun AddCarScreen() {
             Spacer(Modifier.height(60.dp))
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    showError = model.isEmpty() || year.isEmpty() || engine.isEmpty() || fuel.isEmpty();
+                },
                 modifier = Modifier
                     .fillMaxWidth(),
                 //.padding(horizontal = 32.dp, vertical = 16.dp),

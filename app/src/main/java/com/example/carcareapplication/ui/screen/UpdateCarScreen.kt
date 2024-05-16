@@ -16,13 +16,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,13 +41,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.carcareapplication.R
+import com.example.carcareapplication.ui.theme.poppinsFontFamily
 
 @Composable
 fun UpdateCarScreen() {
+    var makeModel by remember{ mutableStateOf("") }
+    var year by remember{ mutableStateOf("") }
+    var engine by remember{ mutableStateOf("") }
+    var fuel by remember{ mutableStateOf("") }
+    var battery by remember{ mutableStateOf("") }
+    var smallService by remember{ mutableStateOf("") }
+    var oil by remember{ mutableStateOf("") }
+    var tires by remember{ mutableStateOf("") }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(id = R.color.blue_200))
+            .verticalScroll(rememberScrollState()) // da se moze skrolati, bez ovoga pola stvari ode ispod i ne vide se
     ) {
         Column(
             modifier = Modifier
@@ -48,21 +66,38 @@ fun UpdateCarScreen() {
                 .wrapContentWidth()
                 .padding(horizontal = 20.dp)
                 .padding(top = 120.dp),
+
             //.background(color = Color.Cyan), // Added padding to the top and bottom
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
 
-            Text(text = "Update car information", fontSize = 32.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
+            Text(text = "Update car information",
+                fontSize = 32.sp,
+                //fontFamily = poppinsFontFamily, ruzno izgleda
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Left,
+                modifier = Modifier.fillMaxWidth())
 
             Spacer(Modifier.height(30.dp))
 
             TextField(
-                value = "" ,
-                onValueChange = {},
+                value = makeModel ,
+                onValueChange = { makeModel = it },
                 label = { Text(text = "Make and Model")},
                 placeholder = { Text(text = "Audi S7")},
                 isError = false,
+                trailingIcon = {  Icon(
+                    painter = if(!makeModel.isEmpty()){
+                        painterResource(id = R.drawable.check_circle)
+                    }
+                    else{
+                        painterResource(id = R.drawable.add)
+                    },
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(24.dp)
+                )},
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -70,11 +105,22 @@ fun UpdateCarScreen() {
             Spacer(Modifier.height(30.dp))
 
             TextField(
-                value = "" ,
-                onValueChange = {},
+                value = year ,
+                onValueChange = { year  = it },
                 label = { Text(text = "Production year")},
                 placeholder = { Text(text = "2013")},
                 isError = false,
+                trailingIcon = {  Icon(
+                    painter = if(!year.isEmpty()){
+                        painterResource(id = R.drawable.check_circle)
+                    }
+                    else{
+                        painterResource(id = R.drawable.add)
+                    },
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(24.dp)
+                )},
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -82,11 +128,22 @@ fun UpdateCarScreen() {
             Spacer(Modifier.height(30.dp))
 
             TextField(
-                value = "" ,
-                onValueChange = {},
+                value = engine ,
+                onValueChange = { engine  = it },
                 label = { Text(text = "Engine")},
                 placeholder = { Text(text = "4.2 TFSI")},
                 isError = false,
+                trailingIcon = {  Icon(
+                    painter = if(!engine.isEmpty()){
+                        painterResource(id = R.drawable.check_circle)
+                    }
+                    else{
+                        painterResource(id = R.drawable.add)
+                    },
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(24.dp)
+                )},
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -94,11 +151,22 @@ fun UpdateCarScreen() {
             Spacer(Modifier.height(30.dp))
 
             TextField(
-                value = "" ,
-                onValueChange = {},
+                value = fuel ,
+                onValueChange = { fuel = it },
                 label = { Text(text = "Fuel type")},
                 placeholder = { Text(text = "Petrol")},
                 isError = false,
+                trailingIcon = {  Icon(
+                    painter = if(!fuel.isEmpty()){
+                        painterResource(id = R.drawable.check_circle)
+                    }
+                    else{
+                        painterResource(id = R.drawable.add)
+                    },
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(24.dp)
+                )},
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -112,9 +180,19 @@ fun UpdateCarScreen() {
                 TextField(
                     value = "",
                     onValueChange = {},
-                    label = { Text(text = "Baterry Replacement", fontSize = 12.sp)},
-                    placeholder = { Text(text = "John")},
+                    label = { Text(text = "Baterry")},
                     isError = false,
+                    trailingIcon = {  Icon(
+                        painter = if(!battery.isEmpty()){
+                            painterResource(id = R.drawable.check_circle)
+                        }
+                        else{
+                            painterResource(id = R.drawable.add)
+                        },
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(21.dp)
+                    )},
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 4.dp),
@@ -124,13 +202,24 @@ fun UpdateCarScreen() {
                 Spacer(modifier = Modifier.width(10.dp))
 
                 TextField(
-                    value = "",
-                    onValueChange = {},
-                    label = { Text(text = "Small Service")},
-                    placeholder = { Text(text = "Doe")},
+                    value = smallService,
+                    onValueChange = { smallService = it },
+                    label = { Text(text = "Service")},
                     isError = false,
+                    trailingIcon = {  Icon(
+                        painter = if(!smallService.isEmpty()){
+                            painterResource(id = R.drawable.check_circle)
+                        }
+                        else{
+                            painterResource(id = R.drawable.add)
+                        },
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(21.dp)
+                    )},
                     modifier = Modifier
-                        .weight(1f),
+                        .weight(1f)
+                        .padding(end = 4.dp),
                     shape = RoundedCornerShape(8.dp)
                 )
             }
@@ -142,11 +231,22 @@ fun UpdateCarScreen() {
                     .fillMaxWidth()
             ) {
                 TextField(
-                    value = "",
-                    onValueChange = {},
-                    label = { Text(text = "Oil Change", fontSize = 12.sp)},
-                    placeholder = { Text(text = "John")},
+                    value = oil,
+                    onValueChange = { oil = it },
+                    label = { Text(text = "Oil Change")},
+
                     isError = false,
+                    trailingIcon = {  Icon(
+                        painter = if(!oil.isEmpty()){
+                            painterResource(id = R.drawable.check_circle)
+                        }
+                        else{
+                            painterResource(id = R.drawable.add)
+                        },
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(21.dp)
+                    )},
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 4.dp),
@@ -156,11 +256,22 @@ fun UpdateCarScreen() {
                 Spacer(modifier = Modifier.width(10.dp))
 
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = tires,
+                    onValueChange = { tires = it },
                     label = { Text(text = "Tire Rotation")},
                     placeholder = { Text(text = "Doe")},
                     isError = false,
+                    trailingIcon = {  Icon(
+                        painter = if(!tires.isEmpty()){
+                            painterResource(id = R.drawable.check_circle)
+                        }
+                        else{
+                            painterResource(id = R.drawable.add)
+                        },
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(21.dp)
+                    )},
                     modifier = Modifier
                         .weight(1f),
                     shape = RoundedCornerShape(8.dp)
@@ -185,9 +296,12 @@ fun UpdateCarScreen() {
             ) {
                 Text(text = "Update", fontSize = 20.sp)
             }
+            Spacer(Modifier.height(30.dp))
+            Spacer(Modifier.height(30.dp))
         }
     }
 }
+
 
 
 @Composable

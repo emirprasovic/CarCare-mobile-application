@@ -2,4 +2,6 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
+    //id("com.android.application")
+    //id("org.jetbrains.kotlin.android")
 }

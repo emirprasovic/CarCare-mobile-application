@@ -11,9 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.carcareapplication.ui.screen.AddCarScreen
+import com.example.carcareapplication.ui.screen.ForumScreen
 import com.example.carcareapplication.ui.screen.LandingScreen
 import com.example.carcareapplication.ui.screen.LoginScreen
 import com.example.carcareapplication.ui.screen.RegisterScreen
+import com.example.carcareapplication.ui.screen.UpdateCarScreenPreview
 import com.example.carcareapplication.ui.theme.CarCareApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +31,9 @@ class MainActivity : ComponentActivity() {
                     //LandingScreen()
                     //LoginScreen()
                     //RegisterScreen()
-                    AddCarScreen()
+                    //AddCarScreen()
+                    //ForumScreen()
+                    UpdateCarScreenPreview()
                 }
             }
         }

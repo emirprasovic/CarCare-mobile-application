@@ -39,6 +39,8 @@ import com.example.carcareapplication.R
 
 @Composable
 fun AddCarScreen() {
+    // -> treba novi icon umjesto ovog koji stoji na prazno polje <- //
+
     // stavit cemo da su sva polja obavezna
     var model by remember { mutableStateOf("") }
     var year by remember { mutableStateOf("") }

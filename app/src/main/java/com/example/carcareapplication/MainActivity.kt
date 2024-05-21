@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.carcareapplication.ui.screen.AddCarScreen
 import com.example.carcareapplication.ui.screen.ForumScreen
+import com.example.carcareapplication.ui.screen.ForumScreenPreview
 import com.example.carcareapplication.ui.screen.LandingScreen
 import com.example.carcareapplication.ui.screen.LoginScreen
 import com.example.carcareapplication.ui.screen.RegisterScreen
@@ -33,7 +34,8 @@ class MainActivity : ComponentActivity() {
                     //RegisterScreen()
                     //AddCarScreen()
                     //ForumScreen()
-                    UpdateCarScreenPreview()
+                    //UpdateCarScreenPreview()
+                    ForumScreenPreview()
                 }
             }
         }

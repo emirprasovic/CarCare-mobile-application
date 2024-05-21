@@ -281,7 +281,8 @@ fun UpdateCarScreen() {
             Spacer(Modifier.height(30.dp))
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                },
                 modifier = Modifier
                     .fillMaxWidth(),
                 //.padding(horizontal = 32.dp, vertical = 16.dp),

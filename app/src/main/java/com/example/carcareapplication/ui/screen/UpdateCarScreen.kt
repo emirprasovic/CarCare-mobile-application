@@ -19,11 +19,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -37,6 +39,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -66,7 +70,8 @@ fun UpdateCarScreen() {
                 .fillMaxSize()
                 .wrapContentWidth()
                 .padding(horizontal = 20.dp)
-                .padding(top = 120.dp),
+                .padding(top = 60.dp)
+                .padding(bottom = 20.dp),
 
             //.background(color = Color.Cyan), // Added padding to the top and bottom
             horizontalAlignment = Alignment.CenterHorizontally
@@ -100,10 +105,13 @@ fun UpdateCarScreen() {
                         .size(24.dp)
                 )},
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next)
             )
 
             Spacer(Modifier.height(30.dp))
+
 
             TextField(
                 value = year ,
@@ -123,7 +131,11 @@ fun UpdateCarScreen() {
                         .size(24.dp)
                 )},
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next,
+                    keyboardType = KeyboardType.Number
+                    )
             )
 
             Spacer(Modifier.height(30.dp))
@@ -146,7 +158,9 @@ fun UpdateCarScreen() {
                         .size(24.dp)
                 )},
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next)
             )
 
             Spacer(Modifier.height(30.dp))
@@ -169,10 +183,16 @@ fun UpdateCarScreen() {
                         .size(24.dp)
                 )},
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next)
             )
 
             Spacer(Modifier.height(30.dp))
+
+            //Text(text = "Maintenance Information")
+
+            //Spacer(Modifier.height(30.dp))
 
             Row(
                 modifier = Modifier
@@ -181,7 +201,7 @@ fun UpdateCarScreen() {
                 TextField(
                     value = "",
                     onValueChange = {},
-                    label = { Text(text = "Baterry")},
+                    label = { Text(text = "Timing chain")},
                     isError = false,
                     trailingIcon = {  Icon(
                         painter = if(!battery.isEmpty()){
@@ -279,7 +299,115 @@ fun UpdateCarScreen() {
                 )
             }
 
-            Spacer(Modifier.height(30.dp))
+            Spacer(Modifier.height(10.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                TextField(
+                    value = oil,
+                    onValueChange = { oil = it },
+                    label = { Text(text = "DPF Cleanup")},
+
+                    isError = false,
+                    trailingIcon = {  Icon(
+                        painter = if(!oil.isEmpty()){
+                            painterResource(id = R.drawable.check_circle)
+                        }
+                        else{
+                            painterResource(id = R.drawable.add)
+                        },
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(21.dp)
+                    )},
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 4.dp),
+                    shape = RoundedCornerShape(8.dp)
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                TextField(
+                    value = tires,
+                    onValueChange = { tires = it },
+                    label = { Text(text = "Brakes")},
+                    placeholder = { Text(text = "Doe")},
+                    isError = false,
+                    trailingIcon = {  Icon(
+                        painter = if(!tires.isEmpty()){
+                            painterResource(id = R.drawable.check_circle)
+                        }
+                        else{
+                            painterResource(id = R.drawable.add)
+                        },
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(21.dp)
+                    )},
+                    modifier = Modifier
+                        .weight(1f),
+                    shape = RoundedCornerShape(8.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                TextField(
+                    value = oil,
+                    onValueChange = { oil = it },
+                    label = { Text(text = "Air Filter")},
+
+                    isError = false,
+                    trailingIcon = {  Icon(
+                        painter = if(!oil.isEmpty()){
+                            painterResource(id = R.drawable.check_circle)
+                        }
+                        else{
+                            painterResource(id = R.drawable.add)
+                        },
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(21.dp)
+                    )},
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 4.dp),
+                    shape = RoundedCornerShape(8.dp)
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                TextField(
+                    value = tires,
+                    onValueChange = { tires = it },
+                    label = { Text(text = "Fuel Filter")},
+                    placeholder = { Text(text = "Doe")},
+                    isError = false,
+                    trailingIcon = {  Icon(
+                        painter = if(!tires.isEmpty()){
+                            painterResource(id = R.drawable.check_circle)
+                        }
+                        else{
+                            painterResource(id = R.drawable.add)
+                        },
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(21.dp)
+                    )},
+                    modifier = Modifier
+                        .weight(1f),
+                    shape = RoundedCornerShape(8.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(30.dp))
 
             Button(
                 onClick = {
@@ -298,8 +426,7 @@ fun UpdateCarScreen() {
             ) {
                 Text(text = "Update", fontSize = 20.sp)
             }
-            Spacer(Modifier.height(30.dp))
-            Spacer(Modifier.height(30.dp))
+            // Spacer(Modifier.height(30.dp))
         }
     }
 }

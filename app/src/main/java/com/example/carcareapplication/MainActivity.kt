@@ -32,12 +32,12 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //LandingScreen()
                     //LoginScreen()
-                    //RegisterScreen()
+                    RegisterScreen()
                     //AddCarScreen()
                     //ForumScreen()
                     //UpdateCarScreenPreview()
                     //ForumScreenPreview()
-                    MyCarsScreenPreview()
+                    //MyCarsScreenPreview()
                 }
             }
         }

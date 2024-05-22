@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -31,10 +33,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.carcareapplication.R
+import com.example.carcareapplication.model.ForumPost
+import com.example.carcareapplication.model.ForumPostList
+import com.example.carcareapplication.model.MyCarList
 
 @Composable
 fun ForumScreen() {
@@ -49,17 +55,27 @@ fun ForumScreen() {
                 .fillMaxSize()
                 .wrapContentWidth()
                 .padding(horizontal = 20.dp)
-                .padding(top = 120.dp),
-            //.background(color = Color.Cyan), // Added padding to the top and bottom
+                .padding(top = 120.dp)
+                .padding(bottom = 20.dp),
+            //.background(color = Color.Cyan),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(text = "Forum posts", textAlign = TextAlign.Left, fontSize = 32.sp)
+
+            ForumCard(forumPost = ForumPostList.forumPosts[1])
+
+            LazyColumn {
+                items(ForumPostList.forumPosts) {
+                        post -> ForumCard(forumPost = post)
+                }
+            }
 
         }
     }
 }
 
 @Composable
-fun ForumCard() {
+fun ForumCard(forumPost: ForumPost) {
     var expanded by remember { mutableStateOf(false) }
 
     Card(
@@ -70,14 +86,13 @@ fun ForumCard() {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            // Basic information
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 // Text("Make and Model")
-                Text("Emir Prasovic", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                Text("7h ago")
+                Text(forumPost.user, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(forumPost.createdAt)
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -86,7 +101,7 @@ fun ForumCard() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Why doesn't my speedometer work properly?", fontSize = 18.sp)
+                Text(forumPost.title, fontSize = 18.sp)
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -95,12 +110,10 @@ fun ForumCard() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Why doesn't it work bla bla idk what's wrong with it. Does anyone know? Any help would be appreciated!")
+                Text(forumPost.description)
             }
 
 
-
-            // Expanded information (if card is expanded)
             if (expanded) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
@@ -187,5 +200,5 @@ fun ForumCard() {
 @Composable
 @Preview(showBackground = true)
 fun ForumScreenPreview() {
-    ForumCard()
+    ForumScreen()
 }

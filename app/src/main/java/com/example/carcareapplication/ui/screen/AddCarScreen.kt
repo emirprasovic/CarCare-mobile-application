@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +32,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -76,7 +79,10 @@ fun AddCarScreen() {
                 placeholder = { Text(text = "Audi S7")},
                 isError = showError && model.isEmpty(), // ako je error true i ako je polje prazno, eror je true ako je nakon unosa polje ostalo prazno, namjerno sam ostavio i uslov ovdje da je model.isEmpty(), moze i bez toga ovdje
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next
+                )
             )
 
             Spacer(Modifier.height(30.dp))
@@ -89,7 +95,11 @@ fun AddCarScreen() {
                 placeholder = { Text(text = "2013")},
                 isError = showError && year.isEmpty(),
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next,
+                    keyboardType = KeyboardType.Number
+                )
             )
 
             Spacer(Modifier.height(30.dp))
@@ -101,7 +111,10 @@ fun AddCarScreen() {
                 placeholder = { Text(text = "4.2 TFSI")},
                 isError = showError && engine.isEmpty(),
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next
+                )
             )
 
             Spacer(Modifier.height(30.dp))
@@ -113,7 +126,10 @@ fun AddCarScreen() {
                 placeholder = { Text(text = "Petrol")},
                 isError = showError && fuel.isEmpty(),
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Done
+                )
             )
 
             Spacer(Modifier.height(60.dp))

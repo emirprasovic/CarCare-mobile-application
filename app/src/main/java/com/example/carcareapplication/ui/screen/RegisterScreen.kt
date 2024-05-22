@@ -77,6 +77,9 @@ fun RegisterScreen() {
     var checkPassword by remember {
         mutableStateOf(true)
     }
+    var nameError by remember {
+        mutableStateOf(false)
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -86,7 +89,9 @@ fun RegisterScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .wrapContentWidth()
-                .padding(vertical = 120.dp, horizontal = 20.dp),
+                .padding(horizontal = 20.dp)
+                .padding(top = 120.dp)
+                .padding(bottom = 20.dp),
             //.background(color = Color.Cyan), // Added padding to the top and bottom
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -108,11 +113,13 @@ fun RegisterScreen() {
                     label = { Text(text = "First name")},
                     enabled = true,
                     placeholder = { Text(text = "John")},
-                    isError = false,
+                    isError = nameError && firstName.isEmpty(),
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 4.dp),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(8.dp),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next)
                 )
 
                 Spacer(modifier = Modifier.width(10.dp))
@@ -123,10 +130,12 @@ fun RegisterScreen() {
                     enabled = true,
                     label = { Text(text = "Last name")},
                     placeholder = { Text(text = "Doe")},
-                    isError = false,
+                    isError = nameError && lastName.isEmpty(),
                     modifier = Modifier
                         .weight(1f),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(8.dp),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next)
                 )
             }
 
@@ -140,7 +149,9 @@ fun RegisterScreen() {
                 placeholder = { Text(text = "example@example.com")},
                 isError = !checkEmail,
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next)
             )
 
             Spacer(Modifier.height(20.dp))
@@ -171,7 +182,9 @@ fun RegisterScreen() {
 
                 },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next)
             )
 
             Spacer(Modifier.height(20.dp))
@@ -193,8 +206,11 @@ fun RegisterScreen() {
             Spacer(Modifier.height(60.dp))
 
             Button(
-                onClick = { checkEmail = checkEmailForRegister(email);
-                    checkPassword = password == repeatPassword; },
+                onClick = {
+                    checkEmail = checkEmailForRegister(email);
+                    checkPassword = password == repeatPassword;
+                    nameError = firstName.isEmpty() || lastName.isEmpty()
+                },
                 modifier = Modifier
                     .fillMaxWidth(),
                 //.padding(horizontal = 32.dp, vertical = 16.dp),
@@ -230,7 +246,7 @@ fun RegisterScreen() {
     }
 }
 fun checkEmailForRegister(email: String): Boolean{
-    return  EMAIL_ADDRESS.matcher(email).matches()
+    return EMAIL_ADDRESS.matcher(email).matches()
 }
 
 @Composable
